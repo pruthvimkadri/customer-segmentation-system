@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Customer Analytics Dashboard</h1>
+
+    <div class="card">
+        <h2>Total Predictions</h2>
+        <p>{{ total_predictions }}</p>
+    </div>
+
+    <canvas id="pieChart"></canvas>
+
+    <h2>Recent Predictions</h2>
+
+    <table>
+        <tr>
+            <th>Age</th>
+            <th>Income</th>
+            <th>Score</th>
+            <th>Segment</th>
+        </tr>
+
+        {% for row in recent_data %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+<h2>Analytics Graphs</h2>
+
+<img src="{{ url_for('static', filename='age_distribution.png') }}" width="500">
+
+<img src="{{ url_for('static', filename='income_vs_spending.png') }}" width="500">
+
+<img src="{{ url_for('static', filename='elbow_method.png') }}" width="500">
+
+<img src="{{ url_for('static', filename='customer_segments.png') }}" width="500">
+
+<script>
+
+const labels = JSON.parse('{{ labels | tojson | safe }}');
+const values = JSON.parse('{{ values | tojson | safe }}');
+
+new Chart(document.getElementById('pieChart'), {
+    type: 'pie',
+
+    data: {
+        labels: labels,
+
+        datasets: [{
+            data: values
+        }]
+    }
+});
+
+</script>
+
+</body>
+</html>

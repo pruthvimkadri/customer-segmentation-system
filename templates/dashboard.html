@@ -1,75 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dashboard</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Segmentation Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <link rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
 <div class="container">
-
-    <h1>Customer Analytics Dashboard</h1>
-
     <div class="card">
-        <h2>Total Predictions</h2>
-        <p>{{ total_predictions }}</p>
+        <h1>Dashboard</h1>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <div class="kpi-box">
+            <h2>Total Predictions</h2>
+            <p>{{ total_predictions }}</p>
+        </div>
+
+        <canvas id="segmentChart"></canvas>
+
+        <h2>Recent Predictions</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Age</th>
+                    <th>Income</th>
+                    <th>Score</th>
+                    <th>Segment</th>
+                    <th>Recommendation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in recent_data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>{{ row[4] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-
-    <canvas id="pieChart"></canvas>
-
-    <h2>Recent Predictions</h2>
-
-    <table>
-        <tr>
-            <th>Age</th>
-            <th>Income</th>
-            <th>Score</th>
-            <th>Segment</th>
-        </tr>
-
-        {% for row in recent_data %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
 </div>
-<h2>Analytics Graphs</h2>
-
-<img src="{{ url_for('static', filename='age_distribution.png') }}" width="500">
-
-<img src="{{ url_for('static', filename='income_vs_spending.png') }}" width="500">
-
-<img src="{{ url_for('static', filename='elbow_method.png') }}" width="500">
-
-<img src="{{ url_for('static', filename='customer_segments.png') }}" width="500">
 
 <script>
+      const labels = JSON.parse('{{ labels | tojson | safe }}');
+      const values = JSON.parse('{{ values | tojson | safe }}');
 
-const labels = JSON.parse('{{ labels | tojson | safe }}');
-const values = JSON.parse('{{ values | tojson | safe }}');
-
-new Chart(document.getElementById('pieChart'), {
-    type: 'pie',
-
-    data: {
-        labels: labels,
-
-        datasets: [{
-            data: values
-        }]
-    }
-});
-
+    new Chart(document.getElementById('segmentChart'), {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
 </script>
 
 </body>

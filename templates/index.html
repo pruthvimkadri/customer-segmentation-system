@@ -1,42 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Customer Segmentation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Segmentation System</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <div class="container">
+    <div class="card">
+        <h1>Customer Segmentation System</h1>
 
-    <h1>Customer Segmentation System</h1>
+        <form method="POST" action="/predict">
+            <label>Age</label>
+            <input type="number" name="age" required>
 
-    <form action="/predict" method="POST">
+            <label>Annual Income</label>
+            <input type="number" name="income" required>
 
-        <label>Age</label>
-        <input type="number" name="age" required>
+            <label>Spending Score</label>
+            <input type="number" name="score" required>
 
-        <label>Annual Income</label>
-        <input type="number" name="income" required>
+            <button type="submit">Predict Segment</button>
+        </form>
 
-        <label>Spending Score</label>
-        <input type="number" name="score" required>
-
-        <button type="submit">Predict Segment</button>
-
-    </form>
-
-    {% if prediction %}
-        <div class="result">
-            <h2>Predicted Segment:</h2>
-            <p>{{ prediction }}</p>
+        {% if prediction %}
+        <div class="result-box">
+            <h2>Prediction: {{ prediction }}</h2>
         </div>
-    {% endif %}
+        {% endif %}
+    </div>
 
+    <a href="/dashboard" class="dashboard-btn">Open Dashboard</a>
 </div>
-<a href="/dashboard">
-    <button type="button">
-        Open Dashboard
-    </button>
-</a>
+
 </body>
 </html>

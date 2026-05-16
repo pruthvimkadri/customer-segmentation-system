@@ -173,22 +173,11 @@ The dashboard includes:
 
 # Screenshots
 
-## Home Page
-<img width="969" height="609" alt="image" src="https://github.com/user-attachments/assets/92671355-1711-4f36-9a63-ca5404926f29" />
-
 ## Prediction Result
-(Add screenshot here)
+<img width="624" height="804" alt="Screenshot (2037)" src="https://github.com/user-attachments/assets/32dde3be-2f31-4750-a4bf-5b6ef11bc1c2" />
 
 ## Dashboard Analytics
-(Add screenshot here)
-
-## Cluster Visualization
-(Add screenshot here)
-
-## Elbow Method Graph
-(Add screenshot here)
-
----
+<img width="506" height="921" alt="Screenshot (2038)" src="https://github.com/user-attachments/assets/6959205f-5944-4f9a-966c-04f139d1a37b" />
 
 # Installation Guide
 
